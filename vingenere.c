@@ -2,10 +2,8 @@
 #include<stdlib.h>
 #include<ctype.h>
 
-int MAX_KEY_SIZE = 512;
 int MAX_INPUT_SIZE = 512;
 int ALPHA_SIZE = 26;
-
 
 void fileReader(char *keyFileName, char *inputFileName);
 void encoder(char *cleanKey, char *cleanInput, int keySize);
@@ -25,62 +23,80 @@ int main(int argc, char **argv){
 
 void fileReader(char *keyFileName, char *inputFileName){
 	
-	int i = 0, keySize;
+	int i, j = 0, keySize;
 	FILE *keyFile, *inputFile;
 	char buffer, *cleanKey, *cleanInput; 
 	
 	keyFile = fopen(keyFileName, "r");
 	inputFile = fopen(inputFileName, "r");
-	
-	cleanKey = malloc((MAX_KEY_SIZE + 1) * sizeof(char));
-	cleanInput = malloc((MAX_INPUT_SIZE + 1) * sizeof(char));
-	
-	while((buffer = fgetc(keyFile)) != EOF){
 		
-		if(isspace(buffer) == 0 && isalpha(buffer) != 0 ){
-			i++;
+	cleanInput = malloc((MAX_INPUT_SIZE + 1) * sizeof(char));
+	cleanInput[MAX_INPUT_SIZE] = '\0';
+	
+	for(i = 0; (i < MAX_INPUT_SIZE) && ((buffer = fgetc(keyFile)) != EOF); i++){
+		
+		if((isspace(buffer) == 0) && (isalpha(buffer) != 0)){
+			j++;
 		}		
 	}
 	
-	keySize = i;
+	keySize = j;
+	printf("keysize:%d\n",keySize);
+	
+	cleanKey = malloc((keySize + 1) * sizeof(char));
+	cleanKey[keySize] = '\0';
 	
 	fclose(keyFile);
 	
 	keyFile = fopen(keyFileName, "r");
 	
-	i = 0;
-	
-	while((buffer = fgetc(keyFile)) != EOF){
+	j=0;
+	for(i = 0; (i < MAX_INPUT_SIZE) && ((buffer = fgetc(keyFile)) != EOF); i++){
 		
-		if(isspace(buffer) == 0 && isalpha(buffer) != 0 ){
+		if((isspace(buffer) == 0) && (isalpha(buffer) != 0) ){
 		
-			cleanKey[i] = tolower(buffer);
-	
-			//printf("cleanKey[%d]:  %c\n", i, cleanKey[i]);
-			i++;
+			cleanKey[j] = tolower(buffer);
+			j++;
 		}		
 	}
 	
-	cleanKey[i] = '\0';
+	printf("keyread:%d\n",j);
 	
 	for(i = 0; i < MAX_INPUT_SIZE; i++){
 		
 		cleanInput[i] = 'x';
 	}
-	
-	i = 0;
-	while((buffer = fgetc(inputFile)) != EOF){
+		
+	j = 0;
+	for(i = 0; (i < MAX_INPUT_SIZE) && ((buffer = fgetc(inputFile)) != EOF); i++){
 		
 		if(isspace(buffer) == 0 && isalpha(buffer) != 0){
 		
-			cleanInput[i] = tolower(buffer);	
-			
-			//printf("cleanInput[%d]:  %c\n", i, cleanInput[i]);
-			i++;
+			cleanInput[j] = tolower(buffer);
+			j++;
 		}		
 	}
 	
-	cleanInput[MAX_INPUT_SIZE + 1] = '\0';
+	i = 0;
+	while((i < MAX_INPUT_SIZE) && (cleanInput[i] ! = '\0')){
+		for(j = 0; (j < MAX_LINE_COUNT)  && (cleankey[i] ! = '\0'); j++)
+			
+			printf("%c", cleanKey[j])	
+			i++;
+		}
+		printf("\n");
+	}
+	
+	i = 0;
+	while((i < MAX_INPUT_SIZE) && (cleanInput[i] ! = '\0')){
+		for(j = 0; (j < MAX_LINE_COUNT)  && (cleanInput[i] ! = '\0'); j++){			
+			printf("%c", cleanInput[j])	
+			i++;
+		}
+		printf("\n");
+	}
+	
+	
 	printf("\n\nVigenere Key:\n\n%s\n\n\nPlainText:\n\n%s\n\n\n", cleanKey, cleanInput);
 
 	encoder(cleanKey, cleanInput, keySize);
@@ -98,7 +114,6 @@ void encoder(char *cleanKey, char *cleanInput,int keySize){
 	keyDecimal = malloc(keySize * sizeof(char));
 	inputDecimal = malloc(MAX_INPUT_SIZE * sizeof(char));
 	result = malloc(MAX_INPUT_SIZE * sizeof(char));
-	//resultChar = malloc(MAX_INPUT_SIZE * sizeof(char));
 	
 	for(i = 0; i < keySize; i++){
 		
