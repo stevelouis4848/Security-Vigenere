@@ -95,7 +95,7 @@ void encoder(char *cleanKey, char *cleanInput,int keySize){
 	int i;
 	char *keyDecimal, *inputDecimal, *result;
 
-	keyDecimal = malloc(MAX_KEY_SIZE * sizeof(char));
+	keyDecimal = malloc(keySize * sizeof(char));
 	inputDecimal = malloc(MAX_INPUT_SIZE * sizeof(char));
 	result = malloc(MAX_INPUT_SIZE * sizeof(char));
 	//resultChar = malloc(MAX_INPUT_SIZE * sizeof(char));
@@ -129,7 +129,5 @@ void encoder(char *cleanKey, char *cleanInput,int keySize){
 				
 		printf("%c",result[i]);
 	}
-	printf("\n");
-		
-	
+	printf("\n");	
 }
