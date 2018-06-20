@@ -4,15 +4,14 @@
 
 int MAX_KEY_SIZE = 512;
 int MAX_INPUT_SIZE = 512;
-int ALPHA_SIZE = 25;
+int ALPHA_SIZE = 26;
 
 
 void fileReader(char *keyFileName, char *inputFileName);
 void encoder(char *cleanKey, char *cleanInput, int keySize);
 
 int main(int argc, char **argv){
-	printf("main\n");
-	fflush(stdout);
+
 	int i;
 	
 	for(i = 2; i < argc; i += 2){
@@ -26,8 +25,6 @@ int main(int argc, char **argv){
 
 void fileReader(char *keyFileName, char *inputFileName){
 	
-	printf("filereader\n");
-	fflush(stdout);
 	int i = 0, keySize;
 	FILE *keyFile, *inputFile;
 	char buffer, *cleanKey, *cleanInput; 
@@ -84,7 +81,7 @@ void fileReader(char *keyFileName, char *inputFileName){
 	}
 	
 	cleanInput[MAX_INPUT_SIZE + 1] = '\0';
-	printf("cleanKEY:\n%s\ncleanINPUT:\n%s\n\n", cleanKey, cleanInput);
+	printf("\n\nVigenere Key:\n\n%s\n\n\nPlainText:\n\n%s\n\n\n", cleanKey, cleanInput);
 
 	encoder(cleanKey, cleanInput, keySize);
 	
@@ -95,8 +92,6 @@ void fileReader(char *keyFileName, char *inputFileName){
 
 void encoder(char *cleanKey, char *cleanInput,int keySize){
 	
-	printf("encoder\n");
-	fflush(stdout);
 	int i;
 	char *keyDecimal, *inputDecimal, *result;
 
@@ -128,12 +123,13 @@ void encoder(char *cleanKey, char *cleanInput,int keySize){
 		//printf("resultChar[%d]:  %c\n", i, resultChar[i]);		
 	}	
 	
-	printf("result:\n");
+	printf("CipherText:\n\n");
 	
 	for(i = 0; i < MAX_INPUT_SIZE; i++){
 				
 		printf("%c",result[i]);
 	}
+	printf("\n");
 		
 	
 }
