@@ -4,7 +4,7 @@
 
 int MAX_INPUT_SIZE = 512;
 int ALPHA_SIZE = 26;
-MAX_LINE_COUNT = 80;
+int MAX_LINE_COUNT = 80;
 
 void fileReader(char *keyFileName, char *inputFileName);
 void encoder(char *cleanKey, char *cleanInput, int keySize);
@@ -42,7 +42,6 @@ void fileReader(char *keyFileName, char *inputFileName){
 	}
 	
 	keySize = j;
-	printf("keysize:%d\n",keySize);
 	
 	cleanKey = malloc((keySize + 1) * sizeof(char));
 	cleanKey[keySize] = '\0';
@@ -60,8 +59,6 @@ void fileReader(char *keyFileName, char *inputFileName){
 			j++;
 		}		
 	}
-	
-	printf("keyread:%d\n",j);
 	
 	for(i = 0; i < MAX_INPUT_SIZE; i++){
 		
@@ -81,21 +78,22 @@ void fileReader(char *keyFileName, char *inputFileName){
 	printf("\n\nVigenere Key:\n\n");
 	
 	i = 0;
-	while((i < MAX_INPUT_SIZE) && (cleanInput[i] ! = '\0')){
-		for(j = 0; (j < MAX_LINE_COUNT)  && (cleankey[i] ! = '\0'); j++)
+	while(i < keySize){
+		for(j = 0; (j < MAX_LINE_COUNT)  && (i < keySize); j++){
 			
-			printf("%c", cleanKey[j]);	
+			printf("%c", cleanKey[i]);	
 			i++;
 		}
 		printf("\n");
 	}
 	
-	printf("\n\nPlainText:\n\n");
+	printf("\n\nPlaintext:\n\n");
 	
 	i = 0;
-	while((i < MAX_INPUT_SIZE) && (cleanInput[i] ! = '\0')){
-		for(j = 0; (j < MAX_LINE_COUNT)  && (cleanInput[i] ! = '\0'); j++){			
-			printf("%c", cleanInput[j]);	
+	while(i < MAX_INPUT_SIZE){
+		for(j = 0; (j < MAX_LINE_COUNT)  && (i < MAX_INPUT_SIZE); j++){			
+			
+			printf("%c", cleanInput[i]);	
 			i++;
 		}
 		printf("\n");
@@ -113,7 +111,7 @@ void fileReader(char *keyFileName, char *inputFileName){
 
 void encoder(char *cleanKey, char *cleanInput,int keySize){
 	
-	int i;
+	int i, j;
 	char *keyDecimal, *inputDecimal, *result;
 
 	keyDecimal = malloc(keySize * sizeof(char));
@@ -143,11 +141,16 @@ void encoder(char *cleanKey, char *cleanInput,int keySize){
 		//printf("resultChar[%d]:  %c\n", i, resultChar[i]);		
 	}	
 	
-	printf("CipherText:\n\n");
+	printf("Ciphertext:\n\n");
 	
-	for(i = 0; i < MAX_INPUT_SIZE; i++){
-				
-		printf("%c",result[i]);
+	i = 0;
+	
+	while(i < MAX_INPUT_SIZE){
+		for(j = 0; (j < MAX_LINE_COUNT) && (i < MAX_INPUT_SIZE); j++){
+					
+			printf("%c",result[i]);
+			i++;
+		}		
+		printf("\n");
 	}
-	printf("\n");	
 }
