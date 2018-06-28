@@ -4,6 +4,7 @@
 
 int MAX_INPUT_SIZE = 512;
 int ALPHA_SIZE = 26;
+MAX_LINE_COUNT = 80;
 
 void fileReader(char *keyFileName, char *inputFileName);
 void encoder(char *cleanKey, char *cleanInput, int keySize);
@@ -77,27 +78,31 @@ void fileReader(char *keyFileName, char *inputFileName){
 		}		
 	}
 	
+	printf("\n\nVigenere Key:\n\n");
+	
 	i = 0;
 	while((i < MAX_INPUT_SIZE) && (cleanInput[i] ! = '\0')){
 		for(j = 0; (j < MAX_LINE_COUNT)  && (cleankey[i] ! = '\0'); j++)
 			
-			printf("%c", cleanKey[j])	
+			printf("%c", cleanKey[j]);	
 			i++;
 		}
 		printf("\n");
 	}
+	
+	printf("\n\nPlainText:\n\n");
 	
 	i = 0;
 	while((i < MAX_INPUT_SIZE) && (cleanInput[i] ! = '\0')){
 		for(j = 0; (j < MAX_LINE_COUNT)  && (cleanInput[i] ! = '\0'); j++){			
-			printf("%c", cleanInput[j])	
+			printf("%c", cleanInput[j]);	
 			i++;
 		}
 		printf("\n");
 	}
+	printf("\n\n");
 	
-	
-	printf("\n\nVigenere Key:\n\n%s\n\n\nPlainText:\n\n%s\n\n\n", cleanKey, cleanInput);
+	//printf("\n\nVigenere Key:\n\n%s\n\n\nPlainText:\n\n%s\n\n\n", cleanKey, cleanInput);
 
 	encoder(cleanKey, cleanInput, keySize);
 	
