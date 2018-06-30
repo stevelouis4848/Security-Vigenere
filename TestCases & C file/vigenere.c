@@ -1,3 +1,8 @@
+// Name: Steve Louis 
+// Date: 07/01/2018
+// Class: CIS 3360
+// Assignment: Vigenere Cipher Hw1
+
 #include <stdio.h>
 #include<stdlib.h>
 #include<ctype.h>
