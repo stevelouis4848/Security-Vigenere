@@ -17,7 +17,7 @@ int main(int argc, char **argv){
 		
 		fileReader(argv[i - 1], argv[i]);
 	
-	}
+	}	
 	
 	return 0;
 }
