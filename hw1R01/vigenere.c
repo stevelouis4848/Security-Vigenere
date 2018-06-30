@@ -51,9 +51,9 @@ void fileReader(char *keyFileName, char *inputFileName){
 	keyFile = fopen(keyFileName, "r");
 	
 	j=0;
-	for(i = 0; (i < MAX_INPUT_SIZE) && ((buffer = fgetc(keyFile)) != EOF); i++){
+	while((j < MAX_INPUT_SIZE) && ((buffer = fgetc(keyFile)) != EOF)){
 		
-		if((isspace(buffer) == 0) && (isalpha(buffer) != 0) ){
+		if(isalpha(buffer) != 0){
 		
 			cleanKey[j] = tolower(buffer);
 			j++;
@@ -66,9 +66,9 @@ void fileReader(char *keyFileName, char *inputFileName){
 	}
 		
 	j = 0;
-	for(i = 0; (i < MAX_INPUT_SIZE) && ((buffer = fgetc(inputFile)) != EOF); i++){
+	while((j < MAX_INPUT_SIZE) && ((buffer = fgetc(inputFile)) != EOF)){
 		
-		if(isspace(buffer) == 0 && isalpha(buffer) != 0){
+		if(isalpha(buffer) != 0){
 		
 			cleanInput[j] = tolower(buffer);
 			j++;
@@ -100,8 +100,6 @@ void fileReader(char *keyFileName, char *inputFileName){
 	}
 	printf("\n\n");
 	
-	//printf("\n\nVigenere Key:\n\n%s\n\n\nPlainText:\n\n%s\n\n\n", cleanKey, cleanInput);
-
 	encoder(cleanKey, cleanInput, keySize);
 	
 	fclose(keyFile);
@@ -120,31 +118,22 @@ void encoder(char *cleanKey, char *cleanInput,int keySize){
 	
 	for(i = 0; i < keySize; i++){
 		
-		keyDecimal[i] = (char)(cleanKey[i] - 'a');
-		
-		//printf("keyDecimal[%d]: %d\n", i, keyDecimal[i]);		
+		keyDecimal[i] = (char)(cleanKey[i] - 'a');	
 	}
 		
 	for(i = 0; i < MAX_INPUT_SIZE; i++){
 		
-		inputDecimal[i] = (char)(cleanInput[i] - 'a');
-		
-		//printf("inputDecimal[%d]:  %d\n", i, inputDecimal[i]); 		
+		inputDecimal[i] = (char)(cleanInput[i] - 'a');		
 	}
 	
 	for(i = 0; i < MAX_INPUT_SIZE; i++){
 		
-		result[i] = ((keyDecimal[i % keySize] + inputDecimal[i]) % ALPHA_SIZE) + 'a';
-		//resultChar[i] = (char)result + 'a';		
-		
-		//printf("result[%d}:  %d\n", i, result[i]);
-		//printf("resultChar[%d]:  %c\n", i, resultChar[i]);		
+		result[i] = ((keyDecimal[i % keySize] + inputDecimal[i]) % ALPHA_SIZE) + 'a';		
 	}	
 	
 	printf("Ciphertext:\n\n");
 	
-	i = 0;
-	
+	i = 0;	
 	while(i < MAX_INPUT_SIZE){
 		for(j = 0; (j < MAX_LINE_COUNT) && (i < MAX_INPUT_SIZE); j++){
 					
